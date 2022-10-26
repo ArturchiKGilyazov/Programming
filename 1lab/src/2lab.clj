@@ -4,7 +4,7 @@
 (println symbols)
 (defn extend-word [word, alphabet, result-word]             ; создаём слово
   (cond
-    (= (count alphabet) 0) result-word                      ; если алфавит кончился
+    (= (count alphabet) 0) result-word                      ; если алфавит кончился ворачиваем слово
     (= (first word) (first alphabet)) (extend-word word (rest alphabet) result-word) ; скипаем повторяющуюся букву
     :default (recur
                word
@@ -19,14 +19,14 @@
                         (recur
                           (rest words)
                           alphabet
-                          (concat result-words (extend-word (first words) alphabet (list))))
+                          (concat result-words (apply str (extend-word (first words) alphabet (list)))))
 
                         )
   )
 
 (defn make-words [alphabet max-length]
   (if
-    (= max-length 0) (list (list))
+    (= max-length 0) (list (str))
                      (extend-words (make-words alphabet (dec max-length)) alphabet (list))
                      )
   )
